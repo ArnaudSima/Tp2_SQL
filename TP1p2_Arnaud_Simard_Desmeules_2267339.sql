@@ -51,7 +51,21 @@ select count(*) as "Nombre d’outils qui n’ont pas été fabriqués par Makit
 from outils_outil
 where fabricant not like '%Makita%';
 -- 12.  Rédigez la requête qui affiche les emprunts des clients de Vancouver et Regina. Il faut afficher le nom complet de l’usager, le numéro d’emprunt, la durée de l’emprunt et le prix de l’outil (indice : n’oubliez pas de traiter le NULL possible (dans les dates et le prix) et utilisez le IN). /5
-
+SELECT o.NOM_FAMILLE as "Nom de famille":, 
+o.ADRESSE as "Adresse",
+ o.VILLE as "Ville"
+from OUTILS_USAGER o
+join OUTILS_EMPRUNT e on e.NUM_USAGER = o.NUM_USAGER;
+select NOM_FAMILLE as "Nom de famille",
+ ADRESSE as "Adresse", 
+ VILLE as "Ville"
+from OUTILS_USAGER
+where NUM_USAGER in (select NUM_USAGER from OUTILS_EMPRUNT);
+select NOM_FAMILLE as "Nom de famille",
+ ADRESSE as "Adresse", 
+ VILLE as "Ville"
+from OUTILS_USAGER o
+where exists (select * from OUTILS_EMPRUNT e where e.NUM_USAGER = o.NUM_USAGER);
 -- 13.  Rédigez la requête qui affiche le nom et le code des outils empruntés qui n’ont pas encore été retournés. /4
 select o.nom,
        e.code_outil
